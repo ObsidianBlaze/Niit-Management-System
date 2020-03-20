@@ -24,33 +24,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Counsellor` (
   `email` VARCHAR(45) NOT NULL,
   `phoneNo` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `` VARCHAR(45) NULL,
   PRIMARY KEY (`idCounsellor`),
-  UNIQUE INDEX `idCounsellor_UNIQUE` (`idCounsellor` ASC) VISIBLE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`table2`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`table2` (
-)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`table3`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`table3` (
-)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`table4`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`table4` (
-)
+  UNIQUE INDEX `idCounsellor_UNIQUE` (`idCounsellor` ASC) )
 ENGINE = InnoDB;
 
 
@@ -65,9 +40,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`counsellors` (
   `phone` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NULL,
   PRIMARY KEY (`idcounsellors`),
-  UNIQUE INDEX `idcounsellors_UNIQUE` (`idcounsellors` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
-  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC) VISIBLE)
+  UNIQUE INDEX `idcounsellors_UNIQUE` (`idcounsellors` ASC) ,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) ,
+  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC) )
 ENGINE = InnoDB;
 
 
@@ -82,9 +57,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`staff` (
   `phone` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NULL,
   PRIMARY KEY (`idstaff`),
-  UNIQUE INDEX `idcounsellors_UNIQUE` (`idstaff` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
-  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC) VISIBLE)
+  UNIQUE INDEX `idcounsellors_UNIQUE` (`idstaff` ASC) ,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) ,
+  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC) )
 ENGINE = InnoDB;
 
 
@@ -98,14 +73,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`students` (
   `email` VARCHAR(45) NOT NULL,
   `phone` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NULL,
-  `dateRegistered` DATETIME NULL DEFAULT getdate(),
+  `dateRegistered` DATETIME NULL DEFAULT now(),
   `counsellors_idcounsellors` INT NOT NULL,
   `status` VARCHAR(45) NULL,
   PRIMARY KEY (`idstudents`, `counsellors_idcounsellors`),
-  UNIQUE INDEX `idcounsellors_UNIQUE` (`idstudents` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
-  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC) VISIBLE,
-  INDEX `fk_students_counsellors_idx` (`counsellors_idcounsellors` ASC) VISIBLE,
+  UNIQUE INDEX `idcounsellors_UNIQUE` (`idstudents` ASC) ,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) ,
+  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC) ,
+  INDEX `fk_students_counsellors_idx` (`counsellors_idcounsellors` ASC) ,
   CONSTRAINT `fk_students_counsellors`
     FOREIGN KEY (`counsellors_idcounsellors`)
     REFERENCES `mydb`.`counsellors` (`idcounsellors`)
@@ -144,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Batches` (
   `moduleName` VARCHAR(45) NOT NULL,
   `moduleId` INT NULL,
   PRIMARY KEY (`idBatches`),
-  UNIQUE INDEX `idBatches_UNIQUE` (`idBatches` ASC) VISIBLE)
+  UNIQUE INDEX `idBatches_UNIQUE` (`idBatches` ASC) )
 ENGINE = InnoDB;
 
 
@@ -156,9 +131,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`batch` (
   `staff_idstaff` INT NOT NULL,
   `modules_idcourses` INT NOT NULL,
   PRIMARY KEY (`idbatch`, `staff_idstaff`, `modules_idcourses`),
-  UNIQUE INDEX `idbatch_UNIQUE` (`idbatch` ASC) VISIBLE,
-  INDEX `fk_batch_staff1_idx` (`staff_idstaff` ASC) VISIBLE,
-  INDEX `fk_batch_modules1_idx` (`modules_idcourses` ASC) VISIBLE,
+  UNIQUE INDEX `idbatch_UNIQUE` (`idbatch` ASC) ,
+  INDEX `fk_batch_staff1_idx` (`staff_idstaff` ASC) ,
+  INDEX `fk_batch_modules1_idx` (`modules_idcourses` ASC) ,
   CONSTRAINT `fk_batch_staff1`
     FOREIGN KEY (`staff_idstaff`)
     REFERENCES `mydb`.`staff` (`idstaff`)
@@ -180,9 +155,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`batch` (
   `staff_idstaff` INT NOT NULL,
   `modules_idcourses` INT NOT NULL,
   PRIMARY KEY (`idbatch`, `staff_idstaff`, `modules_idcourses`),
-  UNIQUE INDEX `idbatch_UNIQUE` (`idbatch` ASC) VISIBLE,
-  INDEX `fk_batch_staff1_idx` (`staff_idstaff` ASC) VISIBLE,
-  INDEX `fk_batch_modules1_idx` (`modules_idcourses` ASC) VISIBLE,
+  UNIQUE INDEX `idbatch_UNIQUE` (`idbatch` ASC) ,
+  INDEX `fk_batch_staff1_idx` (`staff_idstaff` ASC) ,
+  INDEX `fk_batch_modules1_idx` (`modules_idcourses` ASC) ,
   CONSTRAINT `fk_batch_staff1`
     FOREIGN KEY (`staff_idstaff`)
     REFERENCES `mydb`.`staff` (`idstaff`)
@@ -203,10 +178,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`students_has_courses` (
   `students_idstudents` INT NOT NULL,
   `students_counsellors_idcounsellors` INT NOT NULL,
   `courses_idcourses` INT NOT NULL,
-  `dateStarted` DATETIME NULL DEFAULT getdate(),
+  `dateStarted` DATETIME NULL DEFAULT now(),
   PRIMARY KEY (`students_idstudents`, `students_counsellors_idcounsellors`, `courses_idcourses`),
-  INDEX `fk_students_has_courses_courses1_idx` (`courses_idcourses` ASC) VISIBLE,
-  INDEX `fk_students_has_courses_students1_idx` (`students_idstudents` ASC, `students_counsellors_idcounsellors` ASC) VISIBLE,
+  INDEX `fk_students_has_courses_courses1_idx` (`courses_idcourses` ASC) ,
+  INDEX `fk_students_has_courses_students1_idx` (`students_idstudents` ASC, `students_counsellors_idcounsellors` ASC) ,
   CONSTRAINT `fk_students_has_courses_students1`
     FOREIGN KEY (`students_idstudents` , `students_counsellors_idcounsellors`)
     REFERENCES `mydb`.`students` (`idstudents` , `counsellors_idcounsellors`)
@@ -228,8 +203,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`students_has_batch` (
   `students_counsellors_idcounsellors` INT NOT NULL,
   `batch_idbatch` INT NOT NULL,
   PRIMARY KEY (`students_idstudents`, `students_counsellors_idcounsellors`, `batch_idbatch`),
-  INDEX `fk_students_has_batch_batch1_idx` (`batch_idbatch` ASC) VISIBLE,
-  INDEX `fk_students_has_batch_students1_idx` (`students_idstudents` ASC, `students_counsellors_idcounsellors` ASC) VISIBLE,
+  INDEX `fk_students_has_batch_batch1_idx` (`batch_idbatch` ASC) ,
+  INDEX `fk_students_has_batch_students1_idx` (`students_idstudents` ASC, `students_counsellors_idcounsellors` ASC) ,
   CONSTRAINT `fk_students_has_batch_students1`
     FOREIGN KEY (`students_idstudents` , `students_counsellors_idcounsellors`)
     REFERENCES `mydb`.`students` (`idstudents` , `counsellors_idcounsellors`)
@@ -250,8 +225,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`modules_has_courses` (
   `modules_idcourses` INT NOT NULL,
   `courses_idcourses` INT NOT NULL,
   PRIMARY KEY (`modules_idcourses`, `courses_idcourses`),
-  INDEX `fk_modules_has_courses_courses1_idx` (`courses_idcourses` ASC) VISIBLE,
-  INDEX `fk_modules_has_courses_modules1_idx` (`modules_idcourses` ASC) VISIBLE,
+  INDEX `fk_modules_has_courses_courses1_idx` (`courses_idcourses` ASC) ,
+  INDEX `fk_modules_has_courses_modules1_idx` (`modules_idcourses` ASC) ,
   CONSTRAINT `fk_modules_has_courses_modules1`
     FOREIGN KEY (`modules_idcourses`)
     REFERENCES `mydb`.`modules` (`idcourses`)
